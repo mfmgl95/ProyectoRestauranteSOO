@@ -60,8 +60,12 @@ public class RegistrarPedido extends javax.swing.JFrame {
         i.ObtenerDatos(nombre);
         Receta r = new Receta(cnx);
         r.obtenerDatos(i.getIdItem());
- 
-        JOptionPane.showMessageDialog(null,r.getDescripcion(), nombre, JOptionPane.INFORMATION_MESSAGE);
+        
+        RecetaGUI rG = new RecetaGUI(this, true, r.getDescripcion(), 
+                r.getIngredientes(), r.getPreparacion());
+        rG.setVisible(true);
+        
+        //JOptionPane.showMessageDialog(null,r.getDescripcion(), nombre, JOptionPane.INFORMATION_MESSAGE);
     }
     
     public void llenarTabla(ArrayList<String> codigos,ArrayList<String> tipos,
