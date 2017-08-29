@@ -62,14 +62,29 @@ public class RecetaGUI extends javax.swing.JDialog {
 
         taIngredientes.setColumns(20);
         taIngredientes.setRows(5);
+
         taIngredientes.setAutoscrolls(false);
+
+        taIngredientes.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        taIngredientes.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        taIngredientes.setDoubleBuffered(true);
         taIngredientes.setEnabled(false);
+        taIngredientes.setFocusable(false);
+        taIngredientes.setOpaque(false);
         spIngredientes.setViewportView(taIngredientes);
 
+        taPreparacion.setEditable(false);
         taPreparacion.setColumns(20);
         taPreparacion.setRows(5);
+
         taPreparacion.setAutoscrolls(false);
+
+        taPreparacion.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        taPreparacion.setDoubleBuffered(true);
+
         taPreparacion.setEnabled(false);
+        taPreparacion.setFocusable(false);
+        taPreparacion.setOpaque(false);
         spPreparacion.setViewportView(taPreparacion);
 
         bAceptar.setText("Aceptar");

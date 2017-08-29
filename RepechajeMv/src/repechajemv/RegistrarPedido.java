@@ -13,6 +13,7 @@ import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,7 +40,7 @@ public class RegistrarPedido extends javax.swing.JFrame {
     Calendar c = new GregorianCalendar();
     DefaultTableModel modelo ; 
     Connection cnx;
-    
+    int nroMesaActual;
     public RegistrarPedido(Connection cnx) {
         initComponents();
         this.setTitle("Registrar Pedido");
@@ -54,6 +55,13 @@ public class RegistrarPedido extends javax.swing.JFrame {
         lbNroMesa.setText(nro);
     }
     
+    public void setMesaActual(int mesa){
+        this.nroMesaActual = mesa;
+    }
+     public int getMesaActual(){
+        return this.nroMesaActual;
+    }
+     
     public void consultarReceta(String nombre){
         
         Item i = new Item(cnx);
@@ -379,11 +387,23 @@ public class RegistrarPedido extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(RegistrarPedido.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        this.dispose();
     }//GEN-LAST:event_bGuardarActionPerformed
 
     private void bCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarActionPerformed
         // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            //UPDATE mesa SET estado=0 WHERE idMesa=1;
+            PreparedStatement pstm = cnx.prepareStatement("UPDATE mesa " +
+                    "SET estado = ? " +
+                    "WHERE idMesa = ? ");
+            pstm.setInt(2,nroMesaActual);
+            pstm.setInt(1,1);           
+            pstm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(SeleccionarMesa.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.dispose();
     }//GEN-LAST:event_bCancelarActionPerformed
 
