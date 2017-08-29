@@ -381,8 +381,9 @@ public class RegistrarPedido extends javax.swing.JFrame {
             for(int i=0;i<tbDetalle.getRowCount();i++){
                 DetallePedido dP = new DetallePedido(Integer.valueOf(String.valueOf(tbDetalle.getValueAt(i, 0))), 
                         idP, String.valueOf(tbDetalle.getValueAt(i, 4)), cnx);
-                dP.almacenarDetalle();
+                dP.almacenarDetalle(Integer.valueOf(String.valueOf(tbDetalle.getValueAt(i, 4))));
             }
+            
             
         } catch (SQLException ex) {
             Logger.getLogger(RegistrarPedido.class.getName()).log(Level.SEVERE, null, ex);

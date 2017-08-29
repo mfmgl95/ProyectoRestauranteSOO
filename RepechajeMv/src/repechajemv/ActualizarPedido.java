@@ -260,7 +260,7 @@ public class ActualizarPedido extends javax.swing.JFrame {
                 // observen que estamos retornando la clase que definimos de antemano.
                 return tipos[columnIndex];
             }
-
+            
             @Override
             public boolean isCellEditable(int row, int column) {
                 // Sobrescribimos este método para evitar que la columna que contiene los botones sea editada.
@@ -354,7 +354,7 @@ public class ActualizarPedido extends javax.swing.JFrame {
             for(int i=nroFilas;i<tbDetalle.getRowCount();i++){
                 DetallePedido dP = new DetallePedido(Integer.valueOf(String.valueOf(tbDetalle.getValueAt(i, 0))), 
                         p.getIdPedido(), String.valueOf(tbDetalle.getValueAt(i, 4)), cnx);
-                dP.almacenarDetalle();
+                dP.almacenarDetalle(Integer.valueOf(String.valueOf(tbDetalle.getValueAt(i, 4))));
             }
             
         } catch (SQLException ex) {

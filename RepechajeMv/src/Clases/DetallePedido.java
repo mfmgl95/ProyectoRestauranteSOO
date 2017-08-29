@@ -35,12 +35,15 @@ public class DetallePedido {
         this.cnx = cnx;
     }
     
-    public void almacenarDetalle()throws SQLException{
+    public void almacenarDetalle(int cantidad)throws SQLException{
         
        Statement stmt=(Statement)cnx.createStatement();
        String insert="INSERT INTO detalle (Item_idItem, Pedido_idPedido, cantidad) VALUES ('"+idItem+"','"+idPedido+"','"+cantidad+"');";
        stmt.executeUpdate(insert);
-        
+       
+       DetalleCarta dt = new DetalleCarta(cnx);
+       dt.obtenerDatos(idItem);
+       dt.actualizarCantidad(cantidad);
     }
     
     public ResultSet obtenerDetalle(int idPedidoB){
