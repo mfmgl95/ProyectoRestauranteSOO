@@ -62,11 +62,13 @@ public class RecetaGUI extends javax.swing.JDialog {
 
         taIngredientes.setColumns(20);
         taIngredientes.setRows(5);
+        taIngredientes.setAutoscrolls(false);
         taIngredientes.setEnabled(false);
         spIngredientes.setViewportView(taIngredientes);
 
         taPreparacion.setColumns(20);
         taPreparacion.setRows(5);
+        taPreparacion.setAutoscrolls(false);
         taPreparacion.setEnabled(false);
         spPreparacion.setViewportView(taPreparacion);
 
@@ -105,9 +107,9 @@ public class RecetaGUI extends javax.swing.JDialog {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addGap(15, 15, 15)
                 .addComponent(lbTituloReceta, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,7 +122,6 @@ public class RecetaGUI extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(2, 2, 2)))
-                .addGap(18, 18, 18)
                 .addComponent(bAceptar)
                 .addContainerGap(19, Short.MAX_VALUE))
         );

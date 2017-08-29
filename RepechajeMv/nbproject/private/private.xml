@@ -3,23 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeMv/src/Clases/Receta.java</file>
-            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeMv/src/Clases/Item.java</file>
-            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeMv/src/repechajemv/RegistrarComprobante.java</file>
-            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeMv/src/repechajemv/ActualizarPedido.java</file>
-            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeMv/src/repechajemv/SeleccionarItem.java</file>
-            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeMv/src/repechajemv/Principal.java</file>
-            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeMv/src/Clases/Carta.java</file>
-            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeMv/src/repechajemv/RegistrarPedido.java</file>
-            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeMv/src/repechajemv/SeleccionarMesa.java</file>
-            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeMv/src/Clases/DetalleCarta.java</file>
-            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeMv/src/Clases/DetallePedido.java</file>
-            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeMv/src/Clases/ImagePanel.java</file>
-            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeMv/src/Clases/Conexion.java</file>
-            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeMv/src/Clases/Pedido.java</file>
-            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeMv/src/Clases/Comprobante.java</file>
-            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeMv/src/Clases/Cliente.java</file>
-            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeMv/src/Clases/Mesa.java</file>
+            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeProyecto/ProyectoRestauranteSOO/RepechajeMv/src/Clases/Conexion.java</file>
+            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeProyecto/ProyectoRestauranteSOO/RepechajeMv/src/repechajemv/RecetaGUI.java</file>
+            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeProyecto/ProyectoRestauranteSOO/RepechajeMv/src/Clases/DetalleCarta.java</file>
+            <file>file:/C:/Users/TOSHIBA/Desktop/Info%20unt/IX%20Ciclo%20Informatica/Sistemas%20Orientado%20a%20Objetos/Proyecto/RepechajeProyecto/ProyectoRestauranteSOO/RepechajeMv/src/repechajemv/Principal.java</file>
         </group>
     </open-files>
 </project-private>
