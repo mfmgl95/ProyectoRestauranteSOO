@@ -532,17 +532,22 @@ public class SeleccionarMesa extends javax.swing.JFrame {
     }//GEN-LAST:event_b12ActionPerformed
 
     private void bAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAceptarActionPerformed
-        try {
+      try {
             // TODO add your handling code here:
             //UPDATE mesa SET estado=0 WHERE idMesa=1;
             PreparedStatement pstm = cnx.prepareStatement("UPDATE mesa " +
                     "SET estado = ? " +
                     "WHERE idMesa = ? ");
-            
             pstm.setInt(2,mesaSeleccionada);
-            pstm.setInt(1,0);
-            
+            pstm.setInt(1,0);           
             pstm.executeUpdate();
+            if(rp.getMesaActual()!=0)
+            {
+                pstm.setInt(2,rp.getMesaActual());
+                pstm.setInt(1,1);           
+                pstm.executeUpdate();
+            }
+            rp.setMesaActual(mesaSeleccionada);
         } catch (SQLException ex) {
             Logger.getLogger(SeleccionarMesa.class.getName()).log(Level.SEVERE, null, ex);
         }
