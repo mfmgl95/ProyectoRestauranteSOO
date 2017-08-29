@@ -73,6 +73,11 @@ public class SeleccionarMesa extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pEstadoMesas.setBorder(javax.swing.BorderFactory.createTitledBorder("Estado mesas"));
 
@@ -343,6 +348,7 @@ public class SeleccionarMesa extends javax.swing.JFrame {
         
         if(!existeMesasDisponibles){
             JOptionPane.showMessageDialog(null, "Lo sentimos, en estos momentos ninguna mesa se encuentra disponible", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
         }
     }
     
@@ -543,6 +549,11 @@ public class SeleccionarMesa extends javax.swing.JFrame {
         rp.cambiarValorMesa(Integer.toString(mesaSeleccionada));
         this.dispose();
     }//GEN-LAST:event_bAceptarActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
