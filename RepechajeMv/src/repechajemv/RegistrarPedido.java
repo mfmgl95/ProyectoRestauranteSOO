@@ -400,14 +400,13 @@ public class RegistrarPedido extends javax.swing.JFrame {
 
     private void bGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGuardarActionPerformed
         try {
-            // TODO add your handling code here:
-            int idP = (int) (Math.random()*10000+1);
-            Pedido p = new Pedido(idP,lbFecha.getText(), 0,Integer.valueOf(lbNroMesa.getText()), cnx);
+            // TODO add your handling code here
+            Pedido p = new Pedido(lbFecha.getText(), 0,Integer.valueOf(lbNroMesa.getText()), cnx);
             p.almacenarPedido();
             
             for(int i=0;i<tbDetalle.getRowCount();i++){
                 DetallePedido dP = new DetallePedido(Integer.valueOf(String.valueOf(tbDetalle.getValueAt(i, 0))), 
-                        idP, String.valueOf(tbDetalle.getValueAt(i, 4)), cnx);
+                        p.getIdPedido(), String.valueOf(tbDetalle.getValueAt(i, 4)), cnx);
                 dP.almacenarDetalle();
             }
             

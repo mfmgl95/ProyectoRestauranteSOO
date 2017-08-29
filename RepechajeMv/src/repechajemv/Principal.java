@@ -220,13 +220,12 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_miActualizarPedidoActionPerformed
 
     private void miRegistrarComprobanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miRegistrarComprobanteActionPerformed
-        RegistrarComprobante rC = new RegistrarComprobante(cn);
         try {
-            cn.cerrar();
-        } catch (SQLException ex) {
+            RegistrarComprobante rC = new RegistrarComprobante(cnx);
+            rC.setVisible(true);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        rC.setVisible(true);
     }//GEN-LAST:event_miRegistrarComprobanteActionPerformed
 
     private void mSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mSalirMouseClicked

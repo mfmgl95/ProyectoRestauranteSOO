@@ -23,7 +23,7 @@ import repechajemv.SeleccionarMesa;
  */
 public class Pedido {
     
-    private int idPedido;
+    private int idPedido=0;
     private static String fecha;
     private int estado;
     private int idCliente;
@@ -35,8 +35,7 @@ public class Pedido {
         this.cnx = cnx;
     }
     
-    public Pedido(int idPedido, String fecha,int estado, int idMesa,Connection cnx) {
-        this.idPedido = idPedido;
+    public Pedido(String fecha,int estado, int idMesa,Connection cnx) {
         this.fecha = fecha;
         this.estado = estado;
         this.idMesa =  idMesa;
@@ -44,6 +43,18 @@ public class Pedido {
     }
 
     public int getIdPedido() {
+        String sql = "SELECT idPedido FROM Pedido WHERE idMesa = "+idMesa+" AND estado=0;";
+        Statement st;
+        try {
+            st = cnx.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                idPedido = Integer.valueOf(rs.getString(1));
+            }          
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(SeleccionarMesa.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return idPedido;
     }
     
@@ -69,7 +80,7 @@ public class Pedido {
     public void almacenarPedido() throws SQLException{
        Statement stmt=(Statement)cnx.createStatement();
        Date date = DeStringADate();
-       String insert="INSERT INTO pedido (idPedido, fecha, estado, idMesa) VALUES ('"+null+"','"+date+"','"+estado+"','"+idMesa+"');";
+       String insert="INSERT INTO pedido (fecha, estado, idMesa) VALUES ('"+date+"','"+estado+"','"+idMesa+"');";
        stmt.executeUpdate(insert);
         
     }
