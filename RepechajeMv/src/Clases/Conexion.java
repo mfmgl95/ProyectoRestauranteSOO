@@ -15,7 +15,7 @@ public class Conexion {
       if (cnx == null) {
          try {
             Class.forName("com.mysql.jdbc.Driver");
-            cnx = DriverManager.getConnection("jdbc:mysql://localhost:3306/gamesban_testRepechaje", "root", "123456");
+            cnx = DriverManager.getConnection("jdbc:mysql://localhost:3306/repechaje", "root", "123456");
          } catch (SQLException e) {
              System.out.println("Error Conexion BD"+e.getMessage());
          } 
