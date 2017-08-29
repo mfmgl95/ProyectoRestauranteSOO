@@ -39,7 +39,7 @@ public class RegistrarPedido extends javax.swing.JFrame {
     Calendar c = new GregorianCalendar();
     DefaultTableModel modelo ; 
     Connection cnx;
-    
+    int nroMesaActual;
     public RegistrarPedido(Connection cnx) {
         initComponents();
         this.setTitle("Registrar Pedido");
