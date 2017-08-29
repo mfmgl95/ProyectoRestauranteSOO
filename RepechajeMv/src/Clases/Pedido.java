@@ -69,7 +69,7 @@ public class Pedido {
     public void almacenarPedido() throws SQLException{
        Statement stmt=(Statement)cnx.createStatement();
        Date date = DeStringADate();
-       String insert="INSERT INTO pedido (idPedido, fecha, estado, idMesa) VALUES ('"+idPedido+"','"+date+"','"+estado+"','"+idMesa+"');";
+       String insert="INSERT INTO pedido (idPedido, fecha, estado, idMesa) VALUES ('"+null+"','"+date+"','"+estado+"','"+idMesa+"');";
        stmt.executeUpdate(insert);
         
     }

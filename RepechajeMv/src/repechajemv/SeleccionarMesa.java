@@ -532,16 +532,11 @@ public class SeleccionarMesa extends javax.swing.JFrame {
             PreparedStatement pstm = cnx.prepareStatement("UPDATE mesa " +
                     "SET estado = ? " +
                     "WHERE idMesa = ? ");
+            
             pstm.setInt(2,mesaSeleccionada);
-            pstm.setInt(1,0);           
+            pstm.setInt(1,0);
+            
             pstm.executeUpdate();
-            if(rp.getMesaActual()!=0)
-            {
-                pstm.setInt(2,rp.getMesaActual());
-                pstm.setInt(1,1);           
-                pstm.executeUpdate();
-            }
-            rp.setMesaActual(mesaSeleccionada);
         } catch (SQLException ex) {
             Logger.getLogger(SeleccionarMesa.class.getName()).log(Level.SEVERE, null, ex);
         }

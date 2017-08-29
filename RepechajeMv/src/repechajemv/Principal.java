@@ -5,14 +5,26 @@
  */
 package repechajemv;
 
+import Clases.AgregarFuente;
 import Clases.Conexion;
 import Clases.ImagePanel;
+import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
+import com.jgoodies.looks.plastic.theme.DarkStar;
+import java.awt.Toolkit;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static javafx.application.ConditionalFeature.SWT;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
+import sun.misc.GC;
+import utilitarios.ImagenFondo;
 
 /**
  *
@@ -24,20 +36,80 @@ public class Principal extends javax.swing.JFrame {
      * Creates new form Principal
      */
     
-    Conexion cn;
-    Connection cnx;
-    
+    private Conexion cn;
+    private Connection cnx;
+    private Dimension dim;
     public Principal() throws SQLException, ClassNotFoundException {
         initComponents();
+        inicializaIconos();
         this.setTitle("Bienvenido");
         this.setLocationRelativeTo(null);
         //this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         /*ImageIcon icon = new ImageIcon("src/Imagenes/");
         ImagePanel panel = new ImagePanel(icon.getImage());
-        this.getContentPane().add(panel);*/
-        realizarConexion();
+        this.getContentPane().add(panel);*/        
+        realizarConexion();        
+        //dim=super.getToolkit().getScreenSize();        
+        //this.setSize(dim);          
+        ponerImagenPanel("/Imagenes/repechajeFondo.png", panPrincipal);
+        this.setVisible(true);
+        centrarPantalla();
     }
-
+    
+    public void inicializaIconos(){
+        ImageIcon i = redimensionaYRetorna("src/Imagenes/note.png", 20);
+        miRegistrarPedido.setIcon(i);
+        
+        i = redimensionaYRetorna("src/Imagenes/salir.png", 20);
+        mSalir.setIcon(i);
+        
+        i = redimensionaYRetorna("src/Imagenes/update.png", 20);
+        miActualizarPedido.setIcon(i);
+        
+        i = redimensionaYRetorna("src/Imagenes/receipt.png", 20);
+        miRegistrarComprobante.setIcon(i);
+        
+        i = redimensionaYRetorna("src/Imagenes/iconoFrame.png", 20);
+        this.setIconImage(i.getImage());
+        
+        ImageIcon logo = new ImageIcon("src/Imagenes/repechajeFondo.png");
+        Image image = logo.getImage(); // transform it
+        Image newimg = image.getScaledInstance(panPrincipal.getWidth(), panPrincipal.getHeight(), java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
+        logo = new ImageIcon(newimg);
+    }
+    
+    public final void ponerImagenPanel(String direccion,javax.swing.JPanel pFondo) {
+        ImagenFondo Imagen = new ImagenFondo(pFondo.getWidth(),pFondo.getHeight(),direccion);
+        pFondo.add(Imagen);
+        pFondo.repaint();
+    }
+    
+    public ImageIcon redimensionaYRetorna(String ruta, int tamanio){
+        ImageIcon i = new ImageIcon(ruta);
+        Image image = i.getImage(); // transform it
+        Image newimg = image.getScaledInstance(tamanio, tamanio, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
+        i = new ImageIcon(newimg);  // transform it back
+        return i;
+    }
+    
+    public ImageIcon redimensiona(String ruta, JPanel panel){
+        ImageIcon i = new ImageIcon(ruta);
+        Image image = i.getImage(); // transform it
+        Image newimg = image.getScaledInstance(panel.getWidth(), panel.getHeight(), java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
+        i = new ImageIcon(newimg);  // transform it back
+        return i;
+    }        
+    
+    public final void centrarPantalla() {
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        //para obtener las dimensiones de la pantalla
+        Dimension dimen = this.getSize();
+        //igual pero para la ventana
+        this.setLocation(
+            (pantalla.width - dimen.width) / 2,
+            (pantalla.height - dimen.height) / 2);
+    }
+    
     public void realizarConexion() throws SQLException, ClassNotFoundException{
     
         cn = new Conexion();
@@ -50,6 +122,8 @@ public class Principal extends javax.swing.JFrame {
         }
         
     }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,6 +133,7 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panPrincipal = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         mMenu = new javax.swing.JMenu();
         miRegistrarPedido = new javax.swing.JMenuItem();
@@ -68,6 +143,17 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+
+        javax.swing.GroupLayout panPrincipalLayout = new javax.swing.GroupLayout(panPrincipal);
+        panPrincipal.setLayout(panPrincipalLayout);
+        panPrincipalLayout.setHorizontalGroup(
+            panPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 838, Short.MAX_VALUE)
+        );
+        panPrincipalLayout.setVerticalGroup(
+            panPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 533, Short.MAX_VALUE)
+        );
 
         mMenu.setText("Menú");
 
@@ -111,11 +197,11 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 412, Short.MAX_VALUE)
+            .addComponent(panPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 288, Short.MAX_VALUE)
+            .addComponent(panPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -147,7 +233,16 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_mSalirMouseClicked
-
+    public static void setUIFont(javax.swing.plaf.FontUIResource f)
+    {   
+        java.util.Enumeration keys = UIManager.getDefaults().keys();
+        while(keys.hasMoreElements())
+        {
+            Object key = keys.nextElement();
+            Object value = UIManager.get(key);
+            if(value instanceof javax.swing.plaf.FontUIResource) UIManager.put(key, f);
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -157,13 +252,19 @@ public class Principal extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
+        AgregarFuente af = new AgregarFuente();
+        
+        //InputStream is = Principal.class.getResourceAsStream("Fuentes/Boogaloo-Regular.ttf");
+        Font font = af.createFont();//Font.createFont(Font.TRUETYPE_FONT, is);
+        
+        Font sizedFont = font.deriveFont(18f);
+       
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
+            Plastic3DLookAndFeel.setPlasticTheme(new DarkStar());
+            UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticLookAndFeel");
+            
+            setUIFont(new javax.swing.plaf.FontUIResource(sizedFont));
+            
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -196,5 +297,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem miActualizarPedido;
     private javax.swing.JMenuItem miRegistrarComprobante;
     private javax.swing.JMenuItem miRegistrarPedido;
+    private javax.swing.JPanel panPrincipal;
     // End of variables declaration//GEN-END:variables
 }

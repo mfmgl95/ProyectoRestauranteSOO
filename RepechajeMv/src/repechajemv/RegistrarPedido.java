@@ -9,17 +9,19 @@ import Clases.DetallePedido;
 import Clases.Item;
 import Clases.Pedido;
 import Clases.Receta;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -40,9 +42,11 @@ public class RegistrarPedido extends javax.swing.JFrame {
     Calendar c = new GregorianCalendar();
     DefaultTableModel modelo ; 
     Connection cnx;
-    int nroMesaActual;
+    
     public RegistrarPedido(Connection cnx) {
         initComponents();
+        inicializaIconos();
+        
         this.setTitle("Registrar Pedido");
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -50,30 +54,39 @@ public class RegistrarPedido extends javax.swing.JFrame {
         fecha();
     }
     
+    public ImageIcon redimensionaYRetorna(String ruta, int tamanio){
+        ImageIcon i = new ImageIcon(ruta);
+        Image image = i.getImage(); // transform it
+        Image newimg = image.getScaledInstance(tamanio, tamanio, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
+        i = new ImageIcon(newimg);  // transform it back
+        return i;
+    }
     
+    public void inicializaIconos(){
+        ImageIcon i = redimensionaYRetorna("src/Imagenes/table.png", 25);
+        mesa.setBorderPainted(false);
+        mesa.setSelected(false);
+        mesa.setFocusable(false);
+        mesa.setIcon(i);
+        
+        i = redimensionaYRetorna("src/Imagenes/dish.png", 25);
+        item.setBorderPainted(false);
+        item.setSelected(false);
+        item.setFocusable(false);
+        item.setIcon(i);
+    }
     public void cambiarValorMesa(String nro){
         lbNroMesa.setText(nro);
     }
     
-    public void setMesaActual(int mesa){
-        this.nroMesaActual = mesa;
-    }
-     public int getMesaActual(){
-        return this.nroMesaActual;
-    }
-     
     public void consultarReceta(String nombre){
         
         Item i = new Item(cnx);
         i.ObtenerDatos(nombre);
         Receta r = new Receta(cnx);
         r.obtenerDatos(i.getIdItem());
-        
-        RecetaGUI rG = new RecetaGUI(this, true, r.getDescripcion(), 
-                r.getIngredientes(), r.getPreparacion());
-        rG.setVisible(true);
-        
-        //JOptionPane.showMessageDialog(null,r.getDescripcion(), nombre, JOptionPane.INFORMATION_MESSAGE);
+ 
+        JOptionPane.showMessageDialog(null,r.getDescripcion(), nombre, JOptionPane.INFORMATION_MESSAGE);
     }
     
     public void llenarTabla(ArrayList<String> codigos,ArrayList<String> tipos,
@@ -107,7 +120,19 @@ public class RegistrarPedido extends javax.swing.JFrame {
             datos[i][4] = cantidad.get(i);
         }
         
-
+        for(int i = 0;i< codigos.size();i++){
+            ImageIcon icon = redimensionaYRetorna("src/Imagenes/binoculars.png", 20);
+            datos[i][0] = codigos.get(i);
+            datos[i][1] = tipos.get(i);
+            datos[i][2] = descripciones.get(i);
+            datos[i][3] = new JButton(icon);
+            ((JButton)(datos[i][3])).setBorderPainted(false);
+            ((JButton)(datos[i][3])).setBackground(Color.WHITE);
+            datos[i][4] = cantidad.get(i);
+        }
+        
+        tbDetalle.setRowHeight(23);
+        
         tbDetalle.setModel(new javax.swing.table.DefaultTableModel(datos,columnas ){
             // Esta variable nos permite conocer de antemano los tipos de datos de cada columna, dentro del TableModel
             Class[] tipos = tiposColumnas;
@@ -198,10 +223,10 @@ public class RegistrarPedido extends javax.swing.JFrame {
         bGuardar = new javax.swing.JButton();
         lbNroMesa = new javax.swing.JLabel();
         lbFecha = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        miSeleccionarMesa = new javax.swing.JMenuItem();
-        miSeleccionarItem = new javax.swing.JMenuItem();
+        mesa = new javax.swing.JButton();
+        item = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
 
         jInternalFrame1.setVisible(true);
 
@@ -229,6 +254,11 @@ public class RegistrarPedido extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pDetalle.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle"));
 
@@ -247,16 +277,16 @@ public class RegistrarPedido extends javax.swing.JFrame {
         pDetalleLayout.setHorizontalGroup(
             pDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pDetalleLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
+                .addContainerGap())
         );
         pDetalleLayout.setVerticalGroup(
             pDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pDetalleLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pDetalleLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
         );
 
         jLabel1.setText("Número de Mesa: ");
@@ -277,79 +307,88 @@ public class RegistrarPedido extends javax.swing.JFrame {
             }
         });
 
+        lbNroMesa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbNroMesa.setText("0");
+
+        mesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mesaActionPerformed(evt);
+            }
+        });
+
+        item.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pRegistrarPedidoLayout = new javax.swing.GroupLayout(pRegistrarPedido);
         pRegistrarPedido.setLayout(pRegistrarPedidoLayout);
         pRegistrarPedidoLayout.setHorizontalGroup(
             pRegistrarPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator2)
             .addGroup(pRegistrarPedidoLayout.createSequentialGroup()
-                .addGroup(pRegistrarPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addContainerGap()
+                .addComponent(mesa, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(item)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jSeparator1)
+            .addGroup(pRegistrarPedidoLayout.createSequentialGroup()
+                .addGroup(pRegistrarPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pRegistrarPedidoLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bCancelar)
-                        .addGap(18, 18, 18)
-                        .addComponent(bGuardar))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pRegistrarPedidoLayout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addGroup(pRegistrarPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pRegistrarPedidoLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbNroMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(15, Short.MAX_VALUE))
+                        .addComponent(bCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(bGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pRegistrarPedidoLayout.createSequentialGroup()
+                        .addGap(0, 21, Short.MAX_VALUE)
+                        .addComponent(pDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 24, Short.MAX_VALUE))
+            .addGroup(pRegistrarPedidoLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(lbNroMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(lbFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
         );
         pRegistrarPedidoLayout.setVerticalGroup(
             pRegistrarPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pRegistrarPedidoLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addGroup(pRegistrarPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(mesa, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(item, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pRegistrarPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pRegistrarPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lbNroMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(pDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pRegistrarPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lbFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pRegistrarPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(jLabel2)
-                        .addComponent(lbNroMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(15, 15, 15)
-                .addComponent(pDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
-                .addGroup(pRegistrarPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bGuardar)
-                    .addComponent(bCancelar))
-                .addContainerGap(22, Short.MAX_VALUE))
+                    .addComponent(bGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
-
-        jMenu1.setText("Menú");
-
-        miSeleccionarMesa.setText("Seleccionar Mesa");
-        miSeleccionarMesa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miSeleccionarMesaActionPerformed(evt);
-            }
-        });
-        jMenu1.add(miSeleccionarMesa);
-
-        miSeleccionarItem.setText("Seleccionar Item");
-        miSeleccionarItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                miSeleccionarItemActionPerformed(evt);
-            }
-        });
-        jMenu1.add(miSeleccionarItem);
-
-        jMenuBar1.add(jMenu1);
-
-        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pRegistrarPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(pRegistrarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -358,18 +397,6 @@ public class RegistrarPedido extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void miSeleccionarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSeleccionarItemActionPerformed
-        // TODO add your handling code here:
-        SeleccionarItem sI = new SeleccionarItem(cnx,this);
-        sI.setVisible(true);
-    }//GEN-LAST:event_miSeleccionarItemActionPerformed
-
-    private void miSeleccionarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSeleccionarMesaActionPerformed
-        // TODO add your handling code here:
-        SeleccionarMesa sM = new SeleccionarMesa(cnx,this);
-        sM.setVisible(true);
-    }//GEN-LAST:event_miSeleccionarMesaActionPerformed
 
     private void bGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGuardarActionPerformed
         try {
@@ -387,25 +414,29 @@ public class RegistrarPedido extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(RegistrarPedido.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.dispose();
+        
     }//GEN-LAST:event_bGuardarActionPerformed
 
     private void bCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarActionPerformed
         // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
-            //UPDATE mesa SET estado=0 WHERE idMesa=1;
-            PreparedStatement pstm = cnx.prepareStatement("UPDATE mesa " +
-                    "SET estado = ? " +
-                    "WHERE idMesa = ? ");
-            pstm.setInt(2,nroMesaActual);
-            pstm.setInt(1,1);           
-            pstm.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(SeleccionarMesa.class.getName()).log(Level.SEVERE, null, ex);
-        }
         this.dispose();
     }//GEN-LAST:event_bCancelarActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void mesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mesaActionPerformed
+        // TODO add your handling code here:
+        SeleccionarMesa sM = new SeleccionarMesa(cnx,this);
+        sM.setVisible(true);
+    }//GEN-LAST:event_mesaActionPerformed
+
+    private void itemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemActionPerformed
+        // TODO add your handling code here:
+        SeleccionarItem sI = new SeleccionarItem(cnx,this);
+        sI.setVisible(true);
+    }//GEN-LAST:event_itemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -452,17 +483,17 @@ public class RegistrarPedido extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bCancelar;
     private javax.swing.JButton bGuardar;
+    private javax.swing.JButton item;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lbFecha;
     private javax.swing.JLabel lbNroMesa;
-    private javax.swing.JMenuItem miSeleccionarItem;
-    private javax.swing.JMenuItem miSeleccionarMesa;
+    private javax.swing.JButton mesa;
     private javax.swing.JPanel pDetalle;
     private javax.swing.JPanel pRegistrarPedido;
     private javax.swing.JTable tbDetalle;

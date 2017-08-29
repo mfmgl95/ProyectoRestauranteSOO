@@ -7,7 +7,6 @@ package repechajemv;
 
 import Clases.Carta;
 import Clases.Mesa;
-import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
