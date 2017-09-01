@@ -1,8 +1,10 @@
--- MySQL dump 10.13  Distrib 5.6.24, for Win64 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `repechaje` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `repechaje`;
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: repechaje
+-- Host: localhost    Database: repechaje
 -- ------------------------------------------------------
--- Server version	5.6.25-log
+-- Server version	5.7.18-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -48,13 +50,11 @@ DROP TABLE IF EXISTS `cliente`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cliente` (
   `idCliente` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(45) DEFAULT NULL,
-  `razonSocial` varchar(45) DEFAULT NULL,
-  `DNI` varchar(45) DEFAULT NULL,
-  `RUC` varchar(45) DEFAULT NULL,
+  `nombreR` varchar(45) DEFAULT NULL,
+  `DNI_RUC` varchar(45) DEFAULT NULL,
   `direccion` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idCliente`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=202 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,6 +63,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
+INSERT INTO `cliente` VALUES (200,'Renato Gona','66523653','UNT'),(201,'','','');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,7 +83,7 @@ CREATE TABLE `comprobante` (
   PRIMARY KEY (`idComprobante`),
   KEY `fk_Comprobante_Pedido1_idx` (`Pedido`),
   CONSTRAINT `fk_Comprobante_Pedido1` FOREIGN KEY (`Pedido`) REFERENCES `pedido` (`idPedido`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,6 +92,7 @@ CREATE TABLE `comprobante` (
 
 LOCK TABLES `comprobante` WRITE;
 /*!40000 ALTER TABLE `comprobante` DISABLE KEYS */;
+INSERT INTO `comprobante` VALUES (100,'0035-02-07','0.0',1,7),(101,'0035-02-07','23.600000143051147',2,8),(102,'0035-02-07','17.70000010728836',3,10);
 /*!40000 ALTER TABLE `comprobante` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,7 +112,7 @@ CREATE TABLE `detalle` (
   KEY `fk_Item_has_Pedido_Item1_idx` (`Item_idItem`),
   CONSTRAINT `fk_Item_has_Pedido_Item1` FOREIGN KEY (`Item_idItem`) REFERENCES `item` (`idItem`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Item_has_Pedido_Pedido1` FOREIGN KEY (`Pedido_idPedido`) REFERENCES `pedido` (`idPedido`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,6 +121,7 @@ CREATE TABLE `detalle` (
 
 LOCK TABLES `detalle` WRITE;
 /*!40000 ALTER TABLE `detalle` DISABLE KEYS */;
+INSERT INTO `detalle` VALUES (102,10,'1'),(104,7,'1'),(104,10,'2'),(107,8,'2'),(108,8,'2'),(113,10,'3');
 /*!40000 ALTER TABLE `detalle` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -197,7 +200,7 @@ CREATE TABLE `mesa` (
 
 LOCK TABLES `mesa` WRITE;
 /*!40000 ALTER TABLE `mesa` DISABLE KEYS */;
-INSERT INTO `mesa` VALUES (1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),(8,1),(9,1),(10,1),(11,1),(12,1);
+INSERT INTO `mesa` VALUES (1,0),(2,0),(3,0),(4,0),(5,0),(6,0),(7,0),(8,0),(9,1),(10,1),(11,0),(12,1);
 /*!40000 ALTER TABLE `mesa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -219,7 +222,7 @@ CREATE TABLE `pedido` (
   KEY `fk_Pedido_Mesa_idx` (`idMesa`),
   CONSTRAINT `fk_Pedido_Cliente` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Pedido_Mesa` FOREIGN KEY (`idMesa`) REFERENCES `mesa` (`idMesa`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -228,6 +231,7 @@ CREATE TABLE `pedido` (
 
 LOCK TABLES `pedido` WRITE;
 /*!40000 ALTER TABLE `pedido` DISABLE KEYS */;
+INSERT INTO `pedido` VALUES (7,'2017-08-29 05:00:00',0,NULL,9),(8,'2017-08-29 05:00:00',0,NULL,10),(10,'2017-08-29 05:00:00',0,NULL,9);
 /*!40000 ALTER TABLE `pedido` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -261,8 +265,100 @@ INSERT INTO `receta` VALUES (1,'Cau cau','3/4 de kg de mondongo;\r\n2 cucharadas
 UNLOCK TABLES;
 
 --
+-- Dumping events for database 'repechaje'
+--
+
+--
 -- Dumping routines for database 'repechaje'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `guardarComprobante` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `guardarComprobante`(
+IN fecha DATE,
+IN monto VARCHAR(25),
+IN numero INT(11),
+IN Pedido INT(11),
+IN nombreR VARCHAR(25),
+IN DNI_RUC VARCHAR(25),
+IN direccion VARCHAR(25))
+BEGIN
+DECLARE claveComprobante INT(11);
+DECLARE clavecliente INT(11);
+SET claveComprobante = (SELECT COUNT(*) FROM comprobante) + 100;
+SET clavecliente = (SELECT COUNT(*) FROM cliente) + 200;
+
+    INSERT INTO comprobante(idComprobante,
+							fecha,
+							monto,
+                            numero,
+                            Pedido)
+			VALUES(claveComprobante,
+				   fecha,
+                   monto,
+                   numero,
+                   Pedido);
+                   
+	UPDATE mesa SET estado=1 WHERE idMesa = (SELECT idMesa FROM pedido WHERE idPedido=Pedido);
+    
+    INSERT INTO cliente (idCliente, nombreR, DNI_RUC, direccion)
+    VALUES(clavecliente, nombreR, DNI_RUC, direccion);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `obtenerIdPedido` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenerIdPedido`(IN codigo INT(11))
+BEGIN
+	SELECT idPedido FROM pedido WHERE idMesa=codigo;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `obtenPedido` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `obtenPedido`(IN codigo INT(11))
+BEGIN
+
+	SELECT i.idItem, i.nombre, i.precio, SUM(d.cantidad), (i.precio*SUM(d.cantidad))
+    FROM pedido p
+    INNER JOIN  detalle d ON d.Pedido_idPedido = p.idPedido
+    INNER JOIN item i ON i.idItem = d.Item_idItem
+    WHERE p.idMesa = codigo GROUP BY i.idItem;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -273,4 +369,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-28 21:34:00
+-- Dump completed on 2017-08-29 13:48:59

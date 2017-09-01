@@ -90,12 +90,16 @@ public class RegistrarPedido extends javax.swing.JFrame {
     
     public void consultarReceta(String nombre){
         
-        Item i = new Item(cnx);
+        /*Item i = new Item(cnx);
         i.ObtenerDatos(nombre);
         Receta r = new Receta(cnx);
         r.obtenerDatos(i.getIdItem());
- 
-        JOptionPane.showMessageDialog(null,r.getDescripcion(), nombre, JOptionPane.INFORMATION_MESSAGE);
+        
+        RecetaGUI rG = new RecetaGUI(this, true, r.getDescripcion(), 
+                r.getIngredientes(), r.getPreparacion());
+        rG.setVisible(true);
+ */
+        //JOptionPane.showMessageDialog(null,r.getDescripcion(), nombre, JOptionPane.INFORMATION_MESSAGE);
     }
     
     public void llenarTabla(ArrayList<String> codigos,ArrayList<String> tipos,
@@ -408,25 +412,38 @@ public class RegistrarPedido extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGuardarActionPerformed
-        try {
-            // TODO add your handling code here
-            Pedido p = new Pedido(lbFecha.getText(), 0,Integer.valueOf(lbNroMesa.getText()), cnx);
-            p.almacenarPedido();
-            
-            for(int i=0;i<tbDetalle.getRowCount();i++){
-                DetallePedido dP = new DetallePedido(Integer.valueOf(String.valueOf(tbDetalle.getValueAt(i, 0))), 
-                        p.getIdPedido(), String.valueOf(tbDetalle.getValueAt(i, 4)), cnx);
-                dP.almacenarDetalle();
+        if(tbDetalle.getRowCount()==0 || lbNroMesa.getText().equals("0")){
+            if(lbNroMesa.getText().equals("0")){
+                JOptionPane.showMessageDialog(this, "No ha seleccionado mesa");
             }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(RegistrarPedido.class.getName()).log(Level.SEVERE, null, ex);
+            else{
+                JOptionPane.showMessageDialog(this, "No ha seleccionado items");
+            }
         }
-        this.dispose();
+        else{
+            try {
+                // TODO add your handling code here
+                Pedido p = new Pedido(lbFecha.getText(), 0,Integer.valueOf(lbNroMesa.getText()), cnx);
+                p.almacenarPedido();
+
+                for(int i=0;i<tbDetalle.getRowCount();i++){
+                    DetallePedido dP = new DetallePedido(Integer.valueOf(String.valueOf(tbDetalle.getValueAt(i, 0))), 
+                            p.getIdPedido(), String.valueOf(tbDetalle.getValueAt(i, 4)), cnx);
+                    dP.almacenarDetalle();
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(RegistrarPedido.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.dispose();
+        }
+        
+        
     }//GEN-LAST:event_bGuardarActionPerformed
 
     private void bCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarActionPerformed
                 // TODO add your handling code here:
+                
         try {
             // TODO add your handling code here:
             //UPDATE mesa SET estado=0 WHERE idMesa=1;

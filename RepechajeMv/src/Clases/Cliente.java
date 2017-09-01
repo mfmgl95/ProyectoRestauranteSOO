@@ -12,10 +12,36 @@ package Clases;
 public class Cliente {
     
     private int idCliente;
-    private String nombre;
-    private String razonSocial;
-    private String DNI;
-    private String RUC;
+    private String nombreR;
+    private String DNI_RUC;
     private String direccion;
+
+    public Cliente(String nombre, String razonSocial, String DNI, String RUC, String direccion) {
+        this.idCliente = idCliente;
+        this.nombreR = nombre;
+        this.DNI_RUC = DNI;
+        this.direccion = direccion;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public String getNombreR() {
+        return nombreR;
+    }
+
+
+    public String getDNI_RUC() {
+        return DNI_RUC;
+    }
+
+
+
+    public String getDireccion() {
+        return direccion;
+    }
+    
+    
     
 }

@@ -85,6 +85,24 @@ public class Comprobante {
         this.idPedido = idPedido;
     }
     
+    public int obtenerPedido2(int codigo) throws ClassNotFoundException, SQLException{
+      
+       try {
+            CallableStatement proc = cnx.prepareCall("CALL obtenerIdPedido(?)");
+            proc.setInt("codigo", codigo);
+            
+            ResultSet rs = proc.executeQuery();
+            System.out.println(rs.getInt(1));
+           
+            
+            
+       }
+       catch (SQLException e) {                  
+            System.out.println(e);
+       }
+        return 0;
+   }
+    
     public DefaultTableModel obtenerPedido(int codigo) throws ClassNotFoundException, SQLException{
        
        DefaultTableModel modelo = new DefaultTableModel();
@@ -92,9 +110,13 @@ public class Comprobante {
        try {
             CallableStatement proc = cnx.prepareCall("CALL obtenPedido(?)");
             proc.setInt("codigo", codigo);
+            //proc.registerOutParameter("id_pedido", java.sql.Types.INTEGER);
+            
             
             ResultSet rs = proc.executeQuery();
             ResultSetMetaData rsMd = rs.getMetaData();
+            
+            
             
             int cantidadColumnas = rsMd.getColumnCount();
             for (int i = 1; i <= cantidadColumnas; i++) {
@@ -134,15 +156,22 @@ public class Comprobante {
        }
        return 0;
    }
-    public void guardarComprobante(Comprobante comprobante) throws ClassNotFoundException, ParseException{
+    public void guardarComprobante(Comprobante comprobante, Cliente cliente) throws ClassNotFoundException, ParseException{
         
        try {
-            CallableStatement sp = cnx.prepareCall("CALL guardarComprobante(?,?,?,?)");
+            CallableStatement sp = cnx.prepareCall("CALL guardarComprobante(?,?,?,?,?,?,?)");
             sp.setDate("fecha", comprobante.getFecha());
             sp.setString("monto", comprobante.getMonto());
             sp.setInt("numero", comprobante.getNumero());
             sp.setInt("Pedido", comprobante.getIdPedido());
-         
+            
+            
+            sp.setString("nombreR", cliente.getNombreR());
+           
+            sp.setString("DNI_RUC", cliente.getDNI_RUC());
+            
+            sp.setString("direccion", cliente.getDireccion());
+            
             sp.execute();
             System.out.println("Se guardó correctamente");
         } 
